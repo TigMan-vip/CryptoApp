@@ -3,8 +3,10 @@ package com.example.cryptoapp.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityCoinPrceListBinding
 import com.example.cryptoapp.presentation.adapters.CoinInfoAdapter
+import kotlinx.android.synthetic.main.activity_coin_prce_list.*
 
 class CoinPriceListActivity : AppCompatActivity() {
 
@@ -39,10 +41,26 @@ class CoinPriceListActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         coinPriceListAdapter.onCoinClickListener = {
-            val intent = CoinDetailActivity.newIntent(this, it.fromSymbol)
-            startActivity(intent)
+            if (binding.fragmentContainer == null) {
+                launchCoinDetailActivity(it.fromSymbol)
+            } else {
+                launchCoinDetailFragment(it.fromSymbol)
+            }
         }
     }
 
+    private fun launchCoinDetailActivity(fromSymbol: String) {
+        val intent = CoinDetailActivity.newIntent(this, fromSymbol)
+        startActivity(intent)
+    }
+
+    private fun launchCoinDetailFragment(fromSymbol: String) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, CoinDetailFragment.newInstance(fromSymbol))
+            .addToBackStack(null)
+            .commit()
+    }
 
 }
