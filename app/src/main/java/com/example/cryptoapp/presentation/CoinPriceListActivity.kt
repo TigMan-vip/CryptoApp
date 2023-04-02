@@ -10,7 +10,6 @@ class CoinPriceListActivity : AppCompatActivity() {
 
     private lateinit var coinPriceListAdapter: CoinInfoAdapter
 
-
     private val viewModel by lazy {
         ViewModelProvider(this).get(CoinViewModel::class.java)
     }
@@ -33,6 +32,7 @@ class CoinPriceListActivity : AppCompatActivity() {
         with(rvCoinPriceList) {
             coinPriceListAdapter = CoinInfoAdapter(application)
             adapter = coinPriceListAdapter
+            rvCoinPriceList.itemAnimator = null
         }
         setupClickListener()
     }
