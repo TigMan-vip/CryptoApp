@@ -22,8 +22,6 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
     fun getDetailInfo(fSym: String) = getCoinInfoUse.invoke(fSym)
 
     init {
-        viewModelScope.launch {
             loadDataUseCase.invoke()
-        }
     }
 }
